@@ -1,4 +1,11 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/bash
 
-git merge-base --is-ancestor issue-13 origin/issue-13 || (echo 'Please rebase your changes before pushing.' && exit 1)
+# Get the name of the local and remote branches
+local_branch=$(git symbolic-ref HEAD | sed 's!refs\/heads\/!!')
+remote_branch=$(git rev-parse --abbrev-ref @{u})
+
+# Check if the local branch has been rebased onto the remote branch
+if ! git merge-base --is-ancestor $remote_branch $local_branch; then
+    echo "Your changes have not been rebased onto $remote_branch. Please use 'git pull --rebase' instead of 'git pull' to update your local repository."
+    exit 1
+fi
