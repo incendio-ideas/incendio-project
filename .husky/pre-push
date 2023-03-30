@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+git merge-base --is-ancestor issue-13 origin/issue-13 || (echo 'Please rebase your changes before pushing.' && exit 1)
