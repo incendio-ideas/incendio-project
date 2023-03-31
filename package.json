@@ -34,5 +34,10 @@
 		"vite": "^4.2.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@trpc/client": "^10.18.0",
+		"@trpc/server": "^10.18.0",
+		"trpc-sveltekit": "^3.5.2"
+	}
 }
