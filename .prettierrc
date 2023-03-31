@@ -1,8 +1,13 @@
 {
-	"useTabs": true,
+	"useTabs": false,
+	"tabWidth": 2,
 	"singleQuote": true,
-	"trailingComma": "none",
+	"trailingComma": "all",
 	"printWidth": 100,
+	"arrowParens": "always",
+	"bracketSpacing": true,
+	"semi": true,
+	"proseWrap": "preserve",
 	"plugins": ["prettier-plugin-svelte"],
 	"pluginSearchDirs": ["."],
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
