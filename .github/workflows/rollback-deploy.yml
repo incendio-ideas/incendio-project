@@ -1,0 +1,20 @@
+name: Rollback Vercel Production deploy on github release revert
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  release:
+    types: [deleted]
+jobs:
+  Rollback-Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Get previous deployment ID
+        run: |
+          export PREV_DEPLOY_ID=$(vercel list --json --all --scope ${{ secrets.VERCEL_PROJECT_ID }} | jq --arg sha "${{ github.event.release.before }}" '.deployments[] | select(.meta.githubCommitSha == $sha) | .uid')
+      - name: Rollback production deployment
+        run: |
+          vercel deploy $PREV_DEPLOY_ID --prod=false --target=production --token=${{ secrets.VERCEL_TOKEN }}
