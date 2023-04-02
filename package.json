@@ -28,6 +28,7 @@
 		"husky": "^8.0.3",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"prisma": "^4.12.0",
 		"svelte": "^3.58.0",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
@@ -37,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@prisma/client": "^4.12.0",
 		"@trpc/client": "^10.18.0",
 		"@trpc/server": "^10.18.0",
 		"trpc-sveltekit": "^3.5.2"
