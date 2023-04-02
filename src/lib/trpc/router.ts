@@ -1,7 +1,8 @@
-import { publicProcedure, router } from '$lib/trpc';
+import { router } from '$lib/trpc';
+import { usersRouter } from './routes/users';
 
 export const rootRouter = router({
-  greeting: publicProcedure.query(() => `Hello tRPC v10 @ ${new Date().toLocaleTimeString()}`),
+  users: usersRouter,
 });
 
 export type Router = typeof rootRouter;

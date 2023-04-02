@@ -5,36 +5,33 @@
 
   export let data: PageData;
 
-  const client = trpc($page);
-  let clientData: string | undefined;
-  let isLoading = false; 
+  let user = {
+    email: '',
+    username: '',
+  }
 
-  const load = async () => {
-    isLoading = true;
-    clientData = await client.greeting.query()
-    isLoading = false;
-  };
+  const client = trpc($page);
+
+  const createUser = async () => {
+    const newUser = await client.users.create.mutate(user)
+
+    user = {
+      email: '',
+      username: '',
+    }
+
+    data.users = [...data.users, newUser]
+  }
 </script>
 
-<h6>Loading data in<br /><code>+page.svelte</code></h6>
+<form on:submit|preventDefault={createUser}>
+  <input type="email" bind:value={user.email} />
+  <input type="text" bind:value={user.username} />
+  <button>Create</button>
+</form>
 
-<a
-  href="#load"
-  role="button"
-  class="secondary"
-  aria-busy={isLoading}
-  on:click|preventDefault={load}>Load</a
->
-
-<p>
-  Dynamic: 
-  {#if clientData}
-    {clientData}
-  {:else if isLoading}
-    <em>loading...</em>
-  {:else}
-    <b>No data yet fetched</b>
-  {/if}
-</p>
-
-<p>Static: {data.greeting}</p>
+<ul>
+  {#each data.users as user}
+    <li>{user.username}</li>
+  {/each}
+</ul>
