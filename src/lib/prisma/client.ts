@@ -8,12 +8,17 @@ const prismaGlobal = global as typeof global & {
   prisma?: PrismaClient;
 };
 
-export const prisma: PrismaClient =
-  prismaGlobal.prisma ||
-  new PrismaClient({
-    log: import.meta.env.DEV ? ['query', 'error', 'warn'] : ['error'],
-  });
+const isServer = typeof window === 'undefined';
+let prisma: PrismaClient;
 
-if (import.meta.env.PROD) {
-  prismaGlobal.prisma = prisma;
+if (isServer) {
+  prisma =
+    prismaGlobal.prisma ||
+    new PrismaClient({
+      log: import.meta.env.DEV ? ['query', 'error', 'warn'] : ['error'],
+    });
+
+  if (import.meta.env.PROD) {
+    prismaGlobal.prisma = prisma;
+  }
 }
