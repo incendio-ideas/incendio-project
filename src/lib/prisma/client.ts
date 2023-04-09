@@ -9,7 +9,7 @@ const prismaGlobal = global as typeof global & {
 };
 
 const isServer = typeof window === 'undefined';
-let prisma: PrismaClient;
+export let prisma: PrismaClient;
 
 if (isServer) {
   prisma =
