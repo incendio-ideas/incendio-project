@@ -10,21 +10,21 @@
     username: '',
   }
 
-  const client = trpc($page);
+  // const client = trpc($page);
 
-  const createUser = async () => {
-    const newUser = await client.users.create.mutate(user)
+  // const createUser = async () => {
+  //   const newUser = await client.users.create.mutate(user)
 
-    user = {
-      email: '',
-      username: '',
-    }
+  //   user = {
+  //     email: '',
+  //     username: '',
+  //   }
 
-    data.users = [...data.users, newUser]
-  }
+  //   data.users = [...data.users, newUser]
+  // }
 </script>
 
-<form on:submit|preventDefault={createUser}>
+<form on:submit|preventDefault={console.log}>
   <input type="email" bind:value={user.email} />
   <input type="text" bind:value={user.username} />
   <button>Create</button>
