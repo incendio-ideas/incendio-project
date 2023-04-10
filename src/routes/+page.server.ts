@@ -1,5 +1,5 @@
 import { trpc } from '$lib/trpc/client';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
   const client = trpc(event);
@@ -7,4 +7,4 @@ export const load = (async (event) => {
   return {
     users: await client.users.list.query(),
   };
-}) satisfies PageLoad;
+}) satisfies PageServerLoad;
