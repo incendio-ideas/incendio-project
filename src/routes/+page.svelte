@@ -13,15 +13,15 @@
   const client = trpc($page);
 
   const createUser = async () => {
-    const newUser = await client.users.create.mutate(user)
+    const newUser = await client.users.create.mutate(user);
 
     user = {
       email: '',
       username: '',
-    }
+    };
 
-    data.users = [...data.users, newUser]
-  }
+    data.users = [...data.users, newUser];
+  };
 </script>
 
 <form on:submit|preventDefault={createUser}>
