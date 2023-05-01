@@ -12,12 +12,6 @@ export const prisma =
   prismaGlobal.prisma ||
   new PrismaClient({
     log: import.meta.env.DEV ? ['query', 'error', 'warn'] : ['error'],
-
-    datasources: {
-      db: {
-        url: import.meta.env.VITE_DATABASE_URL_PRISMA,
-      },
-    },
   });
 
 if (import.meta.env.PROD) {
