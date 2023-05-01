@@ -3,12 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "cockroachdb"
-  url      = env("DATABASE_URL")
+  provider  = "cockroachdb"
+  url       = env("DATABASE_URL_PRISMA")
+  directUrl = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  username  String   @unique
+  id       String @id @default(cuid())
+  email    String @unique
+  username String @unique
 }
