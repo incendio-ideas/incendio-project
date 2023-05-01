@@ -15,6 +15,7 @@ export const prisma =
   prismaGlobal.prisma ||
   new PrismaClient({
     log: import.meta.env.DEV ? ['query', 'error', 'warn'] : ['error'],
+
     datasources: {
       db: {
         url: process.env.DATABASE_URL_PRISMA,
