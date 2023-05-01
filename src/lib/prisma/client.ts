@@ -3,9 +3,6 @@
  * @link https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices
  */
 import { PrismaClient } from '@prisma/client/edge';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 const prismaGlobal = global as typeof global & {
   prisma?: PrismaClient;
@@ -18,7 +15,7 @@ export const prisma =
 
     datasources: {
       db: {
-        url: process.env.DATABASE_URL_PRISMA,
+        url: import.meta.env.VITE_DATABASE_URL_PRISMA,
       },
     },
   });
