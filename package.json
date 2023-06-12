@@ -43,7 +43,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@prisma/client": "^4.13.0",
+    "@prisma/client": "^4.15.0",
     "@trpc/client": "^10.18.0",
     "@trpc/server": "^10.18.0",
     "@vercel/postgres": "^0.2.1",
