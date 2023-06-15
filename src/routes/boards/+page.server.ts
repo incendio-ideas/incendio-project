@@ -5,6 +5,6 @@ export const load = (async (event) => {
   const client = trpc(event);
 
   return {
-    users: await client.users.list.query(),
+    boards: await client.boards.list.query(),
   };
 }) satisfies PageServerLoad;
