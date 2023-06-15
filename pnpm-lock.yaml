@@ -11,8 +11,8 @@ dependencies:
     specifier: ^10.18.0
     version: 10.18.0
   '@vercel/postgres':
-    specifier: ^0.2.1
-    version: 0.2.1
+    specifier: ^0.3.1
+    version: 0.3.1
   trpc-sveltekit:
     specifier: ^3.5.2
     version: 3.5.2(@sveltejs/adapter-node@1.2.3)(@trpc/client@10.18.0)(@trpc/server@10.18.0)(@types/ws@8.5.4)(ws@8.13.0)
@@ -768,8 +768,8 @@ packages:
       - supports-color
     dev: true
 
-  /@neondatabase/serverless@0.4.3:
-    resolution: {integrity: sha512-U8tpuF5f0R5WRsciR7iaJ5S2h54DWa6Z6CEW+J4KgwyvRN3q3qDz0MibdfFXU0WqnRoi/9RSf/2XN4TfeaOCbQ==}
+  /@neondatabase/serverless@0.4.11:
+    resolution: {integrity: sha512-giqda7y/PZz0htUzt2jhDuAj1zeECf2CvAY6Nv1AvnYPqSzXCLQczeQ0Zqw/fPRPt7MPgD8qkNLQJ123bYh+eg==}
     dependencies:
       '@types/pg': 8.6.6
     dev: false
@@ -1237,11 +1237,11 @@ packages:
       - supports-color
     dev: true
 
-  /@vercel/postgres@0.2.1:
-    resolution: {integrity: sha512-SucRAtiYGxtdx6eKuBB+hcIQgXGS8Njg/u0Mxq9gOx7LhYHZbQrdgeig3+eheRnJScY1FbAGUucjB1ibvcNwWg==}
+  /@vercel/postgres@0.3.1:
+    resolution: {integrity: sha512-1rc17XiYKzcPd+E43nn5BRRBQbt///Fvd1Vb48WeozZ5XD4K6c2tk4u43fGVRftJoc3+UHdGuBOE+sVo+wd6qw==}
     engines: {node: '>=14.6'}
     dependencies:
-      '@neondatabase/serverless': 0.4.3
+      '@neondatabase/serverless': 0.4.11
       bufferutil: 4.0.7
       utf-8-validate: 6.0.3
       ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
