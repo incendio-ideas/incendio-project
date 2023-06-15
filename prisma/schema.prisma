@@ -10,8 +10,28 @@ datasource db {
   shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  username String @unique
+model Board {
+  id        String       @id @default(uuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  name      String
+  cards     Card2Board[]
+}
+
+model Card {
+  id        String       @id @default(uuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  name      String
+  boards    Card2Board[]
+}
+
+model Card2Board {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  board     Board    @relation(fields: [boardId], references: [id])
+  boardId   String
+  card      Card     @relation(fields: [cardId], references: [id])
+  cardId    String
 }

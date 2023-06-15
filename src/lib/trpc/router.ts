@@ -1,8 +1,8 @@
 import { router } from '$lib/trpc';
-import { usersRouter } from './routes/users';
+import { boardsRouter } from './routes/boards';
 
 export const rootRouter = router({
-  users: usersRouter,
+  boards: boardsRouter,
 });
 
 export type Router = typeof rootRouter;
