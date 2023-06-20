@@ -1,60 +1,50 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { trpc } from '$lib/trpc/client';
-  import type { Board, Card2Board } from '@prisma/client';
-  import type { PageData } from './$types';
-  import type { SerializeObject } from '@trpc/server/shared';
+  import { enhance } from '$app/forms';
+  import { fly, slide } from 'svelte/transition';
 
-  export let data: PageData;
+  export let data;
+  export let form;
 
-  const client = trpc($page);
-
-  let boardName = '';
-
-  type CreateBoardResponse = {
-    cards: SerializeObject<Card2Board>[];
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    name: string;
-  };
-
-  const createBoard = async () => {
-    const name = boardName.trim();
-    boardName = '';
-
-    const optimisticResponse: CreateBoardResponse = {
-      id: 'optimistic',
-      name,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      cards: [],
-    };
-
-    data.boards.push(optimisticResponse);
-    data.boards = data.boards;
-
-    const response = await client.boards.create.mutate({ name });
-
-    data.boards = data.boards.map((board) => {
-      if (board.id === 'optimistic') {
-        return response;
-      }
-
-      return board;
-    });
-  };
+  let name = '';
+  let creating: { id: string; name: string }[] = [];
 </script>
 
-<form method="POST" on:submit|preventDefault={createBoard}>
-  <input required name="board-name" type="text" bind:value={boardName} />
+<pre>
+  {JSON.stringify(form, null, 2)}
+</pre>
+
+<form
+  method="POST"
+  action="?/create"
+  use:enhance={() => {
+    const optimisticId = `optimistic-${Math.random().toString(36).slice(2)}`;
+
+    creating = [
+      ...creating,
+      {
+        id: optimisticId,
+        name,
+      },
+    ];
+
+    return async ({ update }) => {
+      await update();
+      creating = creating.filter(({ id }) => id !== optimisticId);
+    };
+  }}
+>
+  <input required name="name" type="text" bind:value={name} />
   <button type="submit">Create board</button>
 </form>
 
 <ul>
-  {#each data.boards as board (board.id)}
-    <li>
-      <a href="/editor/{board.id}">{board.id} {board.name}</a>
+  {#each [...data.boards, ...creating] as board (board.id)}
+    <li in:fly out:slide>
+      <a
+        class={(board.id.startsWith('optimistic') && 'border border-red-500') || null}
+        data-creating={board.id.startsWith('optimistic')}
+        href="/editor/{board.id}">{board.id} {board.name}</a
+      >
     </li>
   {/each}
 </ul>
