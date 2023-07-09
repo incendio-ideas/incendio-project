@@ -4,34 +4,37 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("POSTGRES_PRISMA_URL")
-  directUrl         = env("POSTGRES_URL_NON_POOLING")
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
 }
 
-model Board {
-  id        String       @id @default(uuid())
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  name      String
-  cards     Card2Board[]
-}
-
-model Card {
-  id        String       @id @default(uuid())
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  name      String
-  boards    Card2Board[]
-}
-
-model Card2Board {
-  id        String   @id @default(uuid())
+model Graph {
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  board     Board    @relation(fields: [boardId], references: [id])
-  boardId   String
-  card      Card     @relation(fields: [cardId], references: [id])
-  cardId    String
+  name      String
+  nodes     Node[]
+}
+
+model Node {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  graph     Graph    @relation(fields: [graphId], references: [id])
+  graphId   String
+  edges     Edge[]
+  x         Float
+  y         Float
+  moving    Boolean  @default(false)
+}
+
+model Edge {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  node      Node     @relation(fields: [nodeId], references: [id])
+  nodeId    String
 }

@@ -1,8 +1,10 @@
 import { router } from '$lib/trpc';
-import { boardsRouter } from './routes/boards';
+import { graphsRouter } from './routes/graphs';
+import { nodesRouter } from './routes/nodes';
 
 export const rootRouter = router({
-  boards: boardsRouter,
+  graphs: graphsRouter,
+  nodes: nodesRouter,
 });
 
 export type Router = typeof rootRouter;

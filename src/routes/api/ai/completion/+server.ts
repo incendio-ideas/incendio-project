@@ -4,14 +4,14 @@ import type { RequestHandler } from './$types';
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
-})
+});
 
 const openai = new OpenAIApi(config);
 
 export const POST = (async (event) => {
   const { prompt } = await event.request.json();
 
-const response = await openai.createCompletion({
+  const response = await openai.createCompletion({
     model: 'text-davinci-003',
     stream: true,
     temperature: 0.6,
