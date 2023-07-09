@@ -10,5 +10,10 @@
   },
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "cSpell.words": [
+    "fkey",
+    "pkey",
+    "trpc"
+  ]
 }
