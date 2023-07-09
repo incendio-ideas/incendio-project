@@ -28,6 +28,6 @@ jobs:
       - name: Install Prisma CLI
         run: pnpm add --global prisma@latest ts-node@latest
       - name: Build Project Artifacts
-        run: prisma generate && prisma migrate deploy && vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: prisma generate && vercel build --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
