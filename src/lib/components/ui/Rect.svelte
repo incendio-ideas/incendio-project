@@ -24,6 +24,5 @@
 <style lang="postcss">
   .moving {
     @apply stroke-red-500;
-    transition: all 0.2s ease;
   }
 </style>

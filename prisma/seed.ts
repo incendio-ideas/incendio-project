@@ -2,6 +2,12 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  const nodeVariant = await prisma.nodeVariant.create({
+    data: {
+      name: 'ai-text-generation',
+    },
+  });
+
   await prisma.graph.create({
     data: {
       id: 'graph-1',
@@ -15,6 +21,7 @@ async function main() {
             {
               id: 'node-1',
               name: 'node-1',
+              variantId: nodeVariant.id,
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
               x: 10,
@@ -24,6 +31,7 @@ async function main() {
             {
               id: 'node-2',
               name: 'node-2',
+              variantId: nodeVariant.id,
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
               x: 100,

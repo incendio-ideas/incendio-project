@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e .env vite dev -- --host",
+    "dev:db": "supabase start",
+    "dev:app": "dotenv -e .env vite dev -- --host",
+    "dev": "pnpm run dev:db & pnpm run dev:app",
     "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test",

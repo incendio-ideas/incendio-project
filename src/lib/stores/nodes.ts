@@ -18,8 +18,6 @@ export const nodesDiffStore = derived(
   ([$nodesStore, $lastCheckedTimestampStore]) => {
     const nodesDiff: Record<string, Node> = {};
 
-    console.log($lastCheckedTimestampStore);
-
     for (const [key, node] of Object.entries($nodesStore)) {
       if ($lastCheckedTimestampStore < (node.timestamp ?? 0)) {
         nodesDiff[key] = node;

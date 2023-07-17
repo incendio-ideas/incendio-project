@@ -18,23 +18,31 @@ model Graph {
 }
 
 model Node {
+  id        String        @id @default(cuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  name      String
+  variant   NodeVariant[]
+  variantId String
+  graph     Graph         @relation(fields: [graphId], references: [id])
+  graphId   String
+  x         Float
+  y         Float
+  moving    Boolean       @default(false)
+}
+
+model NodeVariant {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
-  graph     Graph    @relation(fields: [graphId], references: [id])
-  graphId   String
-  edges     Edge[]
-  x         Float
-  y         Float
-  moving    Boolean  @default(false)
+  nodes     Node[]
 }
 
 model Edge {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name      String
-  node      Node     @relation(fields: [nodeId], references: [id])
-  nodeId    String
+  fromId    String
+  toId      String
 }

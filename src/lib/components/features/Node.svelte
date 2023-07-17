@@ -44,6 +44,7 @@
     isLocalChange = false;
     $nodesStore[nodeId].moving = false;
     $nodesStore[nodeId].timestamp = Date.now();
+
     await client.nodes.finishMoving.mutate({ id: nodeId, x, y });
   };
 </script>
