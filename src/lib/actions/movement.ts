@@ -1,3 +1,4 @@
+import { isTouchEvent } from '$lib/utils/is-touch-event';
 import type { Action } from 'svelte/action';
 
 const MOVE_START = 'movestart';
@@ -30,7 +31,7 @@ export const movement: MovementAction = (node) => {
   let moving = false;
 
   const moveStartHandler = (event: Event) => {
-    if (!(event instanceof MouseEvent || event instanceof TouchEvent)) {
+    if (!(event instanceof MouseEvent || isTouchEvent(event))) {
       console.warn('event is not a MouseEvent or TouchEvent');
       return;
     }
@@ -40,7 +41,7 @@ export const movement: MovementAction = (node) => {
     let clientX;
     let clientY;
 
-    if (event instanceof TouchEvent) {
+    if (isTouchEvent(event)) {
       const touch = event.touches[0];
       if (!touch) return;
 
@@ -88,7 +89,7 @@ export const movement: MovementAction = (node) => {
     let clientX;
     let clientY;
 
-    if (event instanceof TouchEvent) {
+    if (isTouchEvent(event)) {
       const touch = event.touches[0];
       if (!touch) return;
 

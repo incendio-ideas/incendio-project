@@ -1,5 +1,6 @@
 <script lang="ts">
   import { editorStore } from '$lib/stores/editor';
+  import { isTouchEvent } from '$lib/utils/is-touch-event';
   import { onMount } from 'svelte';
 
   let moving = false;
@@ -18,7 +19,7 @@
     const { target } = event;
     if (!target) return;
 
-    if (event instanceof TouchEvent) {
+    if (isTouchEvent(event)) {
       const touch = event.touches[0];
       if (!touch) return;
 
@@ -40,7 +41,7 @@
     let clientX;
     let clientY;
 
-    if (event instanceof TouchEvent) {
+    if (isTouchEvent(event)) {
       const touch = event.touches[0];
       if (!touch) return;
 
