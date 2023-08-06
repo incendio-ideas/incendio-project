@@ -1,5 +1,4 @@
 <script lang="ts">
-  import GrainBg from '$lib/components/ui/GrainBg.svelte';
   import Node from '$lib/components/features/Node.svelte';
   import type { PageData } from './$types';
   import {
@@ -10,6 +9,7 @@
   } from '$lib/stores/nodes';
   import { onMount } from 'svelte';
   import type { RealtimeChannel } from '@supabase/supabase-js';
+  import Graph from '$lib/components/features/Graph.svelte';
 
   export let data: PageData;
 
@@ -46,9 +46,7 @@
   }
 </script>
 
-<svg class="min-w-[100vw] min-h-screen" xmlns="http://www.w3.org/2000/svg">
-  <GrainBg />
-
+<Graph>
   {#if data.graph === null}
     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="text-2xl">
       Board not found
@@ -60,4 +58,4 @@
       <Node nodeId={node.id} />
     {/each}
   {/if}
-</svg>
+</Graph>

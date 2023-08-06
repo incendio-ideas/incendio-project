@@ -6,6 +6,7 @@ export type Node = {
   x: number;
   y: number;
   moving: boolean;
+  connectedTo: string[];
   timestamp?: number;
 };
 

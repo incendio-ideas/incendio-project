@@ -3,45 +3,47 @@
   import { nodesStore } from '$lib/stores/nodes';
   import { page } from '$app/stores';
   import { trpc } from '$lib/trpc/client';
+  import BezierLine from '../ui/BezierLine.svelte';
+  import type { MoveEvent, MoveStartEvent } from '$lib/actions/movement';
+  import { editorStore } from '$lib/stores/editor';
 
   const client = trpc($page);
 
   export let nodeId: string;
 
-  let isLocalChange = false;
   let offsetX = 0;
   let offsetY = 0;
 
-  $: ({ x, y, moving } = $nodesStore[nodeId]);
+  $: ({ x, y, moving, connectedTo } = $nodesStore[nodeId]);
 
-  const handleMousedown = async ({ clientX, clientY, target }: MouseEvent) => {
-    if (!target) return;
+  const moveStartHandler = async (event: Event) => {
+    if (!(event instanceof CustomEvent)) return;
 
-    const { x, y } = (target as SVGRectElement).getBoundingClientRect();
+    const { targetX, targetY, clientX, clientY } = (event as MoveStartEvent).detail;
 
-    offsetX = Math.abs(x - clientX);
-    offsetY = Math.abs(y - clientY);
+    offsetX = Math.abs(targetX - clientX);
+    offsetY = Math.abs(targetY - clientY);
 
-    isLocalChange = true;
     $nodesStore[nodeId].moving = true;
     $nodesStore[nodeId].timestamp = Date.now();
 
     await client.nodes.startMoving.mutate({ id: nodeId });
   };
 
-  const handleMousemove = ({ clientX, clientY }: MouseEvent) => {
-    if (!moving || !isLocalChange) return;
+  const moveHandler = (event: Event) => {
+    if (!(event instanceof CustomEvent)) return;
 
-    const x = clientX - offsetX;
-    const y = clientY - offsetY;
+    const { clientX, clientY } = (event as MoveEvent).detail;
+
+    const x = (clientX - offsetX) * $editorStore.scale + $editorStore.translateX;
+    const y = (clientY - offsetY) * $editorStore.scale + $editorStore.translateY;
 
     $nodesStore[nodeId].x = x;
     $nodesStore[nodeId].y = y;
     $nodesStore[nodeId].timestamp = Date.now();
   };
 
-  const handleMouseup = async () => {
-    isLocalChange = false;
+  const moveEndHandler = async () => {
     $nodesStore[nodeId].moving = false;
     $nodesStore[nodeId].timestamp = Date.now();
 
@@ -49,6 +51,20 @@
   };
 </script>
 
-<svelte:window on:mousemove={handleMousemove} on:mouseup={handleMouseup} />
+<Rect
+  {x}
+  {y}
+  {moving}
+  on:movestart={moveStartHandler}
+  on:move={moveHandler}
+  on:moveend={moveEndHandler}
+/>
 
-<Rect {x} {y} {moving} on:mousedown={handleMousedown} />
+{#each connectedTo as connectionId, index}
+  <BezierLine
+    startX={x + 200}
+    startY={y + 20 * (index + 1)}
+    endX={$nodesStore[connectionId].x}
+    endY={$nodesStore[connectionId].y}
+  />
+{/each}

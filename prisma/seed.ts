@@ -2,6 +2,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.graph.deleteMany();
+  await prisma.nodeVariant.deleteMany();
+
   const nodeVariant = await prisma.nodeVariant.create({
     data: {
       name: 'ai-text-generation',
@@ -26,6 +29,7 @@ async function main() {
               updatedAt: new Date().toISOString(),
               x: 10,
               y: 20,
+              connectedTo: ['node-2', 'node-3'],
             },
 
             {
@@ -35,6 +39,16 @@ async function main() {
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
               x: 100,
+              y: 200,
+            },
+
+            {
+              id: 'node-3',
+              name: 'node-3',
+              variantId: nodeVariant.id,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              x: 500,
               y: 200,
             },
           ],

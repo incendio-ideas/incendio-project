@@ -12,22 +12,23 @@ model Graph {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name      String
+  name      String   @default("Unnamed graph")
   nodes     Node[]
 }
 
 model Node {
-  id        String        @id @default(cuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  name      String
-  variant   NodeVariant[]
-  variantId String
-  graph     Graph         @relation(fields: [graphId], references: [id])
-  graphId   String
-  x         Float
-  y         Float
-  moving    Boolean       @default(false)
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  name        String      @default("Unnamed node")
+  variant     NodeVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  variantId   String
+  graph       Graph       @relation(fields: [graphId], references: [id], onDelete: Cascade)
+  graphId     String
+  x           Float       @default(0)
+  y           Float       @default(0)
+  moving      Boolean     @default(false)
+  connectedTo String[]    @default([])
 }
 
 model NodeVariant {
@@ -36,12 +37,4 @@ model NodeVariant {
   updatedAt DateTime @updatedAt
   name      String
   nodes     Node[]
-}
-
-model Edge {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  fromId    String
-  toId      String
 }
