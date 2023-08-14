@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@prisma/client':
     specifier: ^5.1.1
@@ -37,8 +41,8 @@ devDependencies:
     specifier: ^17.4.4
     version: 17.4.4
   '@playwright/test':
-    specifier: ^1.28.1
-    version: 1.28.1
+    specifier: ^1.37.0
+    version: 1.37.0
   '@sveltejs/adapter-auto':
     specifier: ^2.0.0
     version: 2.0.0(@sveltejs/kit@1.20.4)
@@ -878,13 +882,15 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@playwright/test@1.28.1:
-    resolution: {integrity: sha512-xN6spdqrNlwSn9KabIhqfZR7IWjPpFK1835tFNgjrlysaSezuX8PYUwaz38V/yI8TJLG9PkAMEXoHRXYXlpTPQ==}
-    engines: {node: '>=14'}
+  /@playwright/test@1.37.0:
+    resolution: {integrity: sha512-181WBLk4SRUyH1Q96VZl7BP6HcK0b7lbdeKisn3N/vnjitk+9HbdlFz/L5fey05vxaAhldIDnzo8KUoy8S3mmQ==}
+    engines: {node: '>=16'}
     hasBin: true
     dependencies:
       '@types/node': 20.4.1
-      playwright-core: 1.28.1
+      playwright-core: 1.37.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /@polka/url@1.0.0-next.21:
@@ -3666,9 +3672,9 @@ packages:
       pathe: 1.1.0
     dev: true
 
-  /playwright-core@1.28.1:
-    resolution: {integrity: sha512-3PixLnGPno0E8rSBJjtwqTwJe3Yw72QwBBBxNoukIj3lEeBNXwbNiKrNuB1oyQgTBw5QHUhNO3SteEtHaMK6ag==}
-    engines: {node: '>=14'}
+  /playwright-core@1.37.0:
+    resolution: {integrity: sha512-1c46jhTH/myQw6sesrcuHVtLoSNfJv8Pfy9t3rs6subY7kARv0HRw5PpyfPYPpPtQvBOmgbE6K+qgYUpj81LAA==}
+    engines: {node: '>=16'}
     hasBin: true
     dev: true
 
